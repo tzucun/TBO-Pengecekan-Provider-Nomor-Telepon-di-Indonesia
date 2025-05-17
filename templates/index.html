@@ -207,7 +207,6 @@
         const resetBtn = document.getElementById("reset-btn");
         const resultCard = document.getElementById("result");
 
-        // Tab functionality
         const tabBtns = document.querySelectorAll(".tab-btn");
         const providerContents = document.querySelectorAll(".provider-info");
 
@@ -215,27 +214,22 @@
           btn.addEventListener("click", () => {
             const provider = btn.getAttribute("data-provider");
 
-            // Remove active class from all buttons and contents
             tabBtns.forEach((b) => b.classList.remove("active"));
             providerContents.forEach((c) => c.classList.remove("active"));
 
-            // Add active class to clicked button and corresponding content
             btn.classList.add("active");
             document.getElementById(provider).classList.add("active");
           });
         });
 
-        // Check button functionality
         checkBtn.addEventListener("click", checkNumber);
 
-        // Reset button functionality
         resetBtn.addEventListener("click", function () {
           phoneInput.value = "";
           resultCard.classList.add("hidden");
           phoneInput.focus();
         });
 
-        // Allow Enter key to submit
         phoneInput.addEventListener("keypress", function (e) {
           if (e.key === "Enter") {
             checkNumber();
@@ -250,7 +244,6 @@
             return;
           }
 
-          // Send AJAX request
           fetch("/cek-nomor", {
             method: "POST",
             headers: {
@@ -260,7 +253,6 @@
           })
             .then((response) => response.json())
             .then((data) => {
-              // Update result section
               document.getElementById("display-number").textContent =
                 data.nomor;
               document.getElementById("status").textContent = data.valid
@@ -278,10 +270,8 @@
               document.getElementById("keterangan").textContent =
                 data.keterangan;
 
-              // Show result card
               resultCard.classList.remove("hidden");
 
-              // Highlight provider tab if found
               if (data.provider === "Telkomsel") {
                 document.querySelector('[data-provider="telkomsel"]').click();
               } else if (data.provider === "Indosat") {
