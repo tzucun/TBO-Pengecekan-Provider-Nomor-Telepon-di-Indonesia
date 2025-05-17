@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cek Provider Nomor Telepon Indonesia</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Pemeriksa Provider Nomor Telepon</h1>
+        <p class="subtitle">
+          Cek provider dan jenis kartu dari nomor telepon di Indonesia
+        </p>
+      </header>
+
+      <main>
+        <div class="card">
+          <div class="card-content">
+            <div class="input-group">
+              <label for="phone-number">Masukkan Nomor Telepon:</label>
+              <div class="input-with-icon">
+                <i class="fa-solid fa-phone icon-left"></i>
+                <input
+                  type="text"
+                  id="phone-number"
+                  placeholder="0812xxxxxxxx atau 62812xxxxxxxx"
+                  maxlength="14"
+                  autofocus
+                />
+                <button id="reset-btn" class="icon-right">
+                  <i class="fa-solid fa-times"></i>
+                </button>
+              </div>
+              <p class="hint">Format: 10-12 digit dimulai dengan 0 atau 62</p>
+            </div>
+
+            <button id="check-btn" class="btn-primary">
+              <i class="fa-solid fa-search"></i> Cek Provider
+            </button>
+          </div>
+        </div>
+
+        <div id="result" class="card hidden">
+          <div class="card-header">
+            <h2>Hasil Pemeriksaan</h2>
+          </div>
+          <div class="card-content">
+            <div class="result-info">
+              <div class="result-row">
+                <span class="result-label">Nomor:</span>
+                <span id="display-number" class="result-value"></span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Status:</span>
+                <span id="status" class="result-value"></span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Provider:</span>
+                <span id="provider" class="result-value"></span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Jenis Kartu:</span>
+                <span id="jenis-kartu" class="result-value"></span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Awalan (4 Digit):</span>
+                <span id="prefix" class="result-value"></span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Panjang Nomor:</span>
+                <span id="length" class="result-value"></span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Keterangan:</span>
+                <span id="keterangan" class="result-value"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card info-card">
+          <div class="card-header">
+            <h2>Daftar Provider Indonesia</h2>
+          </div>
+          <div class="card-content">
+            <div class="provider-tabs">
+              <button class="tab-btn active" data-provider="telkomsel">
+                Telkomsel
+              </button>
+              <button class="tab-btn" data-provider="indosat">Indosat</button>
+              <button class="tab-btn" data-provider="xl">XL Axiata</button>
+              <button class="tab-btn" data-provider="axis">AXIS</button>
+              <button class="tab-btn" data-provider="tri">Tri</button>
+              <button class="tab-btn" data-provider="smartfren">
+                Smartfren
+              </button>
+            </div>
+
+            <div class="provider-content">
+              <div class="provider-info active" id="telkomsel">
+                <h3>Telkomsel (10-12 digit)</h3>
+                <ul class="prefix-list">
+                  <li><strong>0811:</strong> Kartu Halo (Pascabayar)</li>
+                  <li><strong>0812:</strong> Kartu Halo atau Simpati</li>
+                  <li><strong>0813:</strong> Kartu Halo atau Simpati</li>
+                  <li><strong>0821:</strong> Kartu Simpati</li>
+                  <li><strong>0822:</strong> Kartu Simpati</li>
+                  <li><strong>0823:</strong> Kartu AS</li>
+                  <li><strong>0851:</strong> Kartu AS atau By.U</li>
+                  <li><strong>0852:</strong> Kartu AS</li>
+                  <li><strong>0853:</strong> Kartu AS</li>
+                </ul>
+              </div>
+
+              <div class="provider-info" id="indosat">
+                <h3>Indosat (10-12 digit)</h3>
+                <ul class="prefix-list">
+                  <li><strong>0855:</strong> Matrix (10 digit)</li>
+                  <li>
+                    <strong>0856, 0857:</strong> IM3 (10 digit untuk limited
+                    edition, 11, dan 12 digit)
+                  </li>
+                  <li><strong>0858:</strong> Mentari (12 digit)</li>
+                  <li><strong>0814:</strong> Indosat M2 (12 digit)</li>
+                  <li><strong>0815:</strong> Matrix, Mentari (11, 12 digit)</li>
+                  <li>
+                    <strong>0816:</strong> Matrix, Mentari (10, 11, 12 digit)
+                  </li>
+                  <li>
+                    <strong>0814, 0815, 0816, 0855, 0856, 0857, 0858:</strong>
+                    IM3 (12 digit)
+                  </li>
+                </ul>
+              </div>
+
+              <div class="provider-info" id="xl">
+                <h3>XL Axiata (10-12 digit)</h3>
+                <ul class="prefix-list">
+                  <li>
+                    <strong>0817:</strong> Pra bayar dan Explor (10, 11, 12
+                    digit)
+                  </li>
+                  <li>
+                    <strong>0818:</strong> Pra bayar dan Explor (10, 11, 12
+                    digit)
+                  </li>
+                  <li>
+                    <strong>0819:</strong> Pra bayar dan Explor (10, 11, 12
+                    digit)
+                  </li>
+                  <li>
+                    <strong>0859:</strong> Pra bayar dan Explor (12 digit)
+                  </li>
+                  <li>
+                    <strong>0877:</strong> Pra bayar dan Explor (12 digit)
+                  </li>
+                  <li>
+                    <strong>0878:</strong> Pra bayar dan Explor (12 digit)
+                  </li>
+                </ul>
+              </div>
+
+              <div class="provider-info" id="axis">
+                <h3>AXIS (10-12 digit)</h3>
+                <ul class="prefix-list">
+                  <li><strong>0831, 0832, 0833, 0838:</strong> AXIS</li>
+                </ul>
+              </div>
+
+              <div class="provider-info" id="tri">
+                <h3>Tri (10-12 digit)</h3>
+                <ul class="prefix-list">
+                  <li><strong>0895, 0896, 0897, 0898, 0899:</strong> Tri</li>
+                </ul>
+              </div>
+
+              <div class="provider-info" id="smartfren">
+                <h3>Smartfren (11-12 digit)</h3>
+                <ul class="prefix-list">
+                  <li><strong>0881, 0882, 0883, 0884, 0885, 0886, 0887, 0888, 0889:</strong> Smartfren</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <p>Program Validasi Provider Nomor Telepon Indonesia</p>
+        <p>By: Kelompok 2</p>
+      </footer>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const phoneInput = document.getElementById("phone-number");
+        const checkBtn = document.getElementById("check-btn");
+        const resetBtn = document.getElementById("reset-btn");
+        const resultCard = document.getElementById("result");
+
+        // Tab functionality
+        const tabBtns = document.querySelectorAll(".tab-btn");
+        const providerContents = document.querySelectorAll(".provider-info");
+
+        tabBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const provider = btn.getAttribute("data-provider");
+
+            // Remove active class from all buttons and contents
+            tabBtns.forEach((b) => b.classList.remove("active"));
+            providerContents.forEach((c) => c.classList.remove("active"));
+
+            // Add active class to clicked button and corresponding content
+            btn.classList.add("active");
+            document.getElementById(provider).classList.add("active");
+          });
+        });
+
+        // Check button functionality
+        checkBtn.addEventListener("click", checkNumber);
+
+        // Reset button functionality
+        resetBtn.addEventListener("click", function () {
+          phoneInput.value = "";
+          resultCard.classList.add("hidden");
+          phoneInput.focus();
+        });
+
+        // Allow Enter key to submit
+        phoneInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            checkNumber();
+          }
+        });
+
+        function checkNumber() {
+          const phoneNumber = phoneInput.value.trim();
+
+          if (!phoneNumber) {
+            alert("Mohon masukkan nomor telepon terlebih dahulu!");
+            return;
+          }
+
+          // Send AJAX request
+          fetch("/cek-nomor", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ nomor: phoneNumber }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Update result section
+              document.getElementById("display-number").textContent =
+                data.nomor;
+              document.getElementById("status").textContent = data.valid
+                ? "Valid"
+                : "Tidak Valid";
+              document.getElementById("status").className =
+                "result-value " + (data.valid ? "valid" : "invalid");
+              document.getElementById("provider").textContent = data.provider;
+              document.getElementById("jenis-kartu").textContent =
+                data.jenis_kartu;
+              document.getElementById("prefix").textContent =
+                data.prefix || "-";
+              document.getElementById("length").textContent =
+                data.panjang + " digit";
+              document.getElementById("keterangan").textContent =
+                data.keterangan;
+
+              // Show result card
+              resultCard.classList.remove("hidden");
+
+              // Highlight provider tab if found
+              if (data.provider === "Telkomsel") {
+                document.querySelector('[data-provider="telkomsel"]').click();
+              } else if (data.provider === "Indosat") {
+                document.querySelector('[data-provider="indosat"]').click();
+              } else if (data.provider === "XL Axiata") {
+                document.querySelector('[data-provider="xl"]').click();
+              } else if (data.provider === "AXIS") {
+                document.querySelector('[data-provider="axis"]').click();
+              } else if (data.provider === "Tri") {
+                document.querySelector('[data-provider="tri"]').click();
+              } else if (data.provider === "Smartfren") {
+                document.querySelector('[data-provider="smartfren"]').click();
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Terjadi kesalahan saat melakukan pemeriksaan nomor.");
+            });
+        }
+      });
+    </script>
+  </body>
+</html>
